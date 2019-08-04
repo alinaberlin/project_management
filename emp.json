@@ -1,5 +1,5 @@
 [
-    { "id": 1, "firstName": "Alina", "lastName": "Ch" },
+    { "id": 1, "firstName": "Alina", "lastName": "Ch", "projects": [2, 1] },
     { "id": 2, "firstName": "George", "lastName": "Clooney" },
     { "firstName": "Alina", "lastName": "Briela", "id": 3 }
 ]
