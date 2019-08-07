@@ -2,5 +2,6 @@
     { "givenName": "Test", "startDate": 1564337252601, "slackTime": 5, "id": 1 },
     { "givenName": "Test2", "startDate": 1564337252601, "slackTime": 3, "id": 2 },
     { "givenName": "Test3", "startDate": 1564337252601, "slackTime": 4, "id": 3 },
-    { "givenName": "Test5", "startDate": 1564337252601, "slackTime": 6, "id": 4 }
+    { "givenName": "Test5", "startDate": 1564337252601, "slackTime": 6, "id": 4 },
+    { "givenName": "Test7", "startDate": 1564337252601, "slackTime": 9, "id": 5 }
 ]

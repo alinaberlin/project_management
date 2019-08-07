@@ -23,39 +23,30 @@ app.get("/employee/:id", (request, response, next) => {
     console.log("Id value", request.params["id"]);
     response.send(JSON.stringify(employees.filter(e => e.id == request.params["id"])[0]));
 });
-//Creating a new employee with a given first name, last name and a direct supervisor
-app.post("/employee", (request, response, next) => {
-    employees.sort((a, b) => a.id - b.id);
-    const maxId = employees.length ? employees[employees.length - 1].id : 0;
-    console.log("request body", request.body);
-    const newEm = request.body;
+
+function save(elements, element, file) {
+    elements.sort((a, b) => a.id - b.id);
+    const maxId = elements.length ? elements[elements.length - 1].id : 0;
+    const newEm = element;
     newEm.id = maxId + 1;
-    employees.push(newEm);
-    fs.writeFile("emp.json", JSON.stringify(employees), function(err) {
+    elements.push(newEm);
+    fs.writeFile(file, JSON.stringify(elements), function(err) {
         if (err) {
             return console.error(err);
         }
 
         console.log("The file was saved!");
     });
-
+    return newEm;
+}
+//Creating a new employee with a given first name, last name and a direct supervisor
+app.post("/employee", (request, response, next) => {
+    const newEm = save(employees, request.body, "emp.json");
     response.send(JSON.stringify(newEm));
 });
 //Creating a new project with a given name, a start date and a time slack
 app.post("/project", (request, response, next) => {
-    projects.sort((a, b) => a.id - b.id);
-    const maxId = projects.length ? projects[projects.length - 1].id : 0;
-    const newProject = request.body;
-    newProject.id = maxId + 1;
-    projects.push(newProject);
-    fs.writeFile("projects.json", JSON.stringify(projects), function(err) {
-        if (err) {
-            return console.error(err);
-        }
-
-        console.log("The file was saved!");
-    });
-
+    const newProject = save(projects, request.body, "projects.json");
     response.send(JSON.stringify(newProject));
 });
 //display all task
@@ -65,20 +56,9 @@ app.get("/tasks", (request, response, next) => {
 
 //Creating a new task with a given name, a description of this task and estimated days needed tocomplete it
 app.post("/task", (request, response, next) => {
-    tasks.sort((a, b) => a.id - b.id);
-    const maxId = tasks.length ? tasks[tasks.length - 1].id : 0;
-    const newTask = request.body;
-    newTask.id = maxId + 1;
-    tasks.push(newTask);
-    fs.writeFile("tasks.json", JSON.stringify(tasks), function(err) {
-        if (err) {
-            return console.error(err);
-        }
-
-        console.log("The file was saved!");
-    });
-
+    const newTask = save(tasks, request.body, "tasks.json")
     response.send(JSON.stringify(newTask));
+
 });
 //Display/View all tasks for a given project
 app.get("/project/:id/task", (request, response, next) => {
