@@ -130,30 +130,40 @@ app.patch("/employee/:id", (request, response, next) => {
 //Delete a  task (don‘t forget to update the underlying references)
 app.delete("/task/:id", (request, response, next) => {
     const id = request.params["id"];
-    const index = tasks.findIndex(el => el.id == id);
-    tasks.splice(index, 1);
-
-    fs.writeFile("tasks.json", JSON.stringify(tasks), function(err) {
+   deleteElement(tasks, id, 'tasks.json')
+    response.status(204);
+    response.send();
+});
+function deleteElement(elements, id, file) {
+    const index = elements.findIndex(el => el.id == id);
+    elements.splice(index, 1);
+    fs.writeFile(file, JSON.stringify(elements), function(err) {
         if (err) {
             return console.error(err);
         }
 
-        console.log("The task was deleted!");
+        console.log("The element was deleted!");
     });
-    response.status(204);
-    response.send();
-});
+}
 //Delete a project (don‘t forget to update the underlying references)
 app.delete("/project/:id", (request, response, next) => {
-    const id = request.params["id"];
-    const index = projects.findIndex(el => el.id == id);
-    projects.splice(index, 1);
+
+     const id = request.params["id"];
+     deleteElement(projects, id, 'projects.json')
+    // const index = projects.findIndex(el => el.id == id);
+    // projects.splice(index, 1);
+    
     employees.forEach(el => {
-        const projectIndex = el.projects.findIndex(p => p == index);
+        if(el.projects) {
+        const projectIndex = el.projects.findIndex(p => p == id);
+    
         if (projectIndex > -1) {
             el.projects.splice(projectIndex, 1);
         }
+    }
     });
+
+
     fs.writeFile("emp.json", JSON.stringify(employees), function(err) {
         if (err) {
             return console.error(err);
@@ -162,13 +172,7 @@ app.delete("/project/:id", (request, response, next) => {
         console.log("The project was deleted!");
     });
 
-    fs.writeFile("projects.json", JSON.stringify(projects), function(err) {
-        if (err) {
-            return console.error(err);
-        }
-
-        console.log("The project was deleted!");
-    });
+    
     response.status(204);
     response.send();
 });
