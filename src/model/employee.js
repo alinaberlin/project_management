@@ -1,9 +1,9 @@
-function Employee(firstName, secondName, supervisor) {
+function Employee(id, firstName, lastName) {
+    this.id = id;
     this.firstName = firstName;
-    this.secondName = secondName;
-    this.supervisor = supervisor;
+    this.lastName = lastName;
     this.projects = [];
-    function addProject(project) {
+    this.addProject = function(project){
         this.projects.push(project);
     }
 }

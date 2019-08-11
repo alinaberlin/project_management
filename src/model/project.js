@@ -1,12 +1,10 @@
-function Project (giveName, startDate, timeSlack) {
-    this.giveName  = giveName;
+function Project(id, giveName, startDate, timeSlack) {
+    this.id = id;
+    this.giveName = giveName;
     this.startDate = startDate;
     this.timeSlack = timeSlack;
-    function addTask (task){
-        this.task.push(task);
-    }
 }
 
-module.exports ={
+module.exports = {
     Project
-}
+};
